@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"></head>
+<body style="margin:0;display:flex;">
+<iframe id="video" style="flex:3" frameborder="0"></iframe>
+<iframe id="chat" style="flex:1" frameborder="0"></iframe>
+
+<script>
+const p = new URLSearchParams(location.search);
+const ch = p.get('channel');
+
+document.getElementById('video').src = 'https://player.kick.com/' + ch;
+document.getElementById('chat').src = 'https://kick.com/' + ch + '/chat';
+</script>
+</body>
+</html>

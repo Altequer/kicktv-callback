@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Kick TV</title>
+<style>
+body { margin:0; background:#0e0e10; color:white; font-family:Arial; }
+.grid { display:grid; grid-template-columns: repeat(5,1fr); gap:15px; padding:20px; }
+.card { background:#1f1f23; padding:10px; border-radius:10px; cursor:pointer; }
+.topbar { display:flex; justify-content:space-between; padding:15px; }
+button { padding:8px 14px; border-radius:6px; border:none; cursor:pointer; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+<h2>Kick TV</h2>
+<button onclick="login()">Entrar</button>
+</div>
+
+<div id="app">Carregando...</div>
+
+<script>
+function login(){
+  window.location.href = "/api/auth/login";
+}
+
+async function load(){
+  const res = await fetch('/api/lives');
+  const data = await res.json();
+
+  document.getElementById('app').innerHTML =
+    '<div class="grid">' + data.data.map(l => `
+      <div class="card" onclick="openLive('${l.user.username}')">
+        <img src="${l.thumbnail}" width="100%" />
+        <p>${l.session_title}</p>
+      </div>
+    `).join('') + '</div>';
+}
+
+function openLive(channel){
+  window.location.href = 'player.html?channel=' + channel;
+}
+
+load();
+</script>
+
+</body>
+</html>
